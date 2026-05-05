@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafuné — Brand Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #F9F9F9;
+  min-height: 100vh;
+  font-family: 'Anton', sans-serif;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── BASE ─── */
+.box {
+  border: 1px solid rgba(252,252,0,0.3);
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+}
+.row { display: grid; gap: 16px; }
+
+/* ═══════════════════════════════════════
+   HERO: Logo+Typo izquierda | Artistas derecha
+   ═══════════════════════════════════════ */
+.brandkit-hero {
+  display: grid;
+  grid-template-columns: 430px 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.hero-left {
+  display: grid;
+  grid-template-rows: 280px 155px 155px;
+  gap: 18px;
+}
+
+/* LOGO */
+.logo-box {
+  background: #FCFC00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  height: 280px;
+}
+.logo-box img {
+  width: 150%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* TIPOGRAFÍAS */
+.typo-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 36px;
+  height: 155px;
+}
+.anton-box { background: #F94ECD; }
+.outfit-box { background: #262626; }
+
+.typo-name {
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.anton-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 52px;
+  color: #F9F9F9;
+}
+.outfit-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 46px;
+  color: #F9F9F9;
+}
+.typo-detail {
+  margin-top: 8px;
+  font-family: 'Anton', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+}
+.outfit-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.od-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  color: #F9F9F9;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+.od-light  { font-weight: 300; }
+.od-medium { font-weight: 400; }
+.od-bold   { font-weight: 700; }
+.outfit-detail {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  color: rgba(249,249,249,0.45);
+  letter-spacing: 0.06em;
+}
+
+/* ARTISTAS — proporcional al afiche (ratio ~2:3) */
+.artistas-box {
+  background: radial-gradient(
+    circle at center,
+    #1c5c3a 0%,
+    #0f2f20 60%,
+    #000 100%
+  );
+  cursor: pointer;
+  user-select: none;
+  width: 430px;
+  height: 644px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.artista-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: #116336;
+}
+.artista-slide.active { opacity: 1; }
+.artista-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Asset carousel */
+.asset-box {
+  height: 320px;
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #F9F9F9;
+  border: 1px solid rgba(252,252,0,0.3);
+}
+.asset-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.asset-slide.active { opacity: 1; }
+.asset-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* App box en hero-right */
+.app-box {
+  flex: 1;
+  height: 644px;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid #116336;
+  background: #F9F9F9;
+}
+.app-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sk-item {
+  position: absolute;
+  width: 150px;
+  opacity: 0;
+  transform: rotate(var(--rot, 0deg)) scale(0.85);
+  animation: skCycle 8s infinite;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(2px 6px 10px rgba(0,0,0,0.15));
+}
+
+@keyframes skCycle {
+  0%   { opacity: 0; transform: rotate(var(--rot)) scale(0.85); }
+  8%   { opacity: 1; transform: rotate(var(--rot)) scale(1); }
+  28%  { opacity: 1; transform: rotate(var(--rot)) scale(1); }
+  36%  { opacity: 0; transform: rotate(var(--rot)) scale(0.85); }
+  100% { opacity: 0; transform: rotate(var(--rot)) scale(0.85); }
+}
+
+.artistas-hint {
+  position: absolute;
+  top: 28px; right: 32px;
+  z-index: 10;
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  pointer-events: none;
+}
+.artistas-info {
+  position: absolute;
+  left: 36px; bottom: 36px;
+  z-index: 10;
+  pointer-events: none;
+}
+.artistas-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.artista-nombre {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(44px, 5vw, 76px);
+  color: #FCFC00;
+  line-height: 0.9;
+}
+.artistas-counter {
+  position: absolute;
+  right: 34px; bottom: 34px;
+  z-index: 10;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.45);
+  pointer-events: none;
+}
+.artistas-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+  pointer-events: none;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #FCFC00;
+  border-radius: 999px;
+  opacity: 0.7;
+}
+.dot.active {
+  background: #FCFC00;
+  opacity: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .brandkit-hero { grid-template-columns: 1fr; }
+  .hero-left { grid-template-rows: 320px 190px 190px; }
+  .artistas-box { min-height: 680px; }
+}
+
+/* ═══════════════════════════════════════
+   ROW 2: Foto | Colores | Foto
+   ═══════════════════════════════════════ */
+.row-colors { grid-template-columns: 1fr 2fr 1fr; }
+
+.photo-box { height: 320px; }
+.photo-box img { width: 150%; height: 150%; object-fit: cover; display: block; margin: -25% 0 0 -25%; }
+
+
+#colores {
+  background: transparent;
+  border: 1px solid rgba(252,252,0,0.4) !important;
+  height: 320px;
+  padding: 10px;
+}
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  height: 100%;
+}
+.cg-card {
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.cg-card:nth-child(4) { grid-column: span 2; }
+
+.cg-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.cg-hex {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+.cg-verde    { background: #116336; }
+.cg-verde    .cg-name, .cg-verde    .cg-hex { color: #FCFC00; }
+.cg-magenta  { background: #F94ECD; }
+.cg-magenta  .cg-name, .cg-magenta  .cg-hex { color: #FCFC00; }
+.cg-blanco   { background: #F9F9F9; border: 1.5px solid #F94ECD; }
+.cg-blanco   .cg-name, .cg-blanco   .cg-hex { color: #262626; }
+.cg-amarillo { background: #FCFC00; }
+.cg-amarillo .cg-name, .cg-amarillo .cg-hex { color: #F94ECD; }
+.cg-negro    { background: #262626; }
+.cg-negro    .cg-name, .cg-negro    .cg-hex { color: #F9F9F9; }
+
+/* ═══════════════════════════════════════
+   ROW 3: Remera 1 | Remera 2 | Pulseras
+   ═══════════════════════════════════════ */
+.row-merch { grid-template-columns: 1fr 1fr; }
+
+.merch-unified {
+  height: 380px;
+  background: url('Fondo_.webp') center center / cover;
+  display: flex;
+  gap: 0;
+  padding: 0;
+  align-items: stretch;
+}
+.merch-unified img {
+  flex: 1;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.pulsera-box { height: 380px; background: #262626; }
+.pulsera-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ═══════════════════════════════════════
+   ROW 4: Tipología de imagen
+   ═══════════════════════════════════════ */
+#tipologia-img {
+  height: 320px;
+  overflow: hidden;
+  background: #F94ECD;
+  cursor: default;
+}
+.tipologia-label {
+  position: absolute;
+  top: 18px; left: 24px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  z-index: 10;
+  pointer-events: none;
+}
+.img-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  animation: tickerScroll 28s linear infinite;
+}
+.img-track:hover { animation-play-state: paused; }
+.img-panel { height: 100%; width: 280px; flex-shrink: 0; }
+.img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── STICKERS ─── */
+.sticker {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  animation: stickerFloat var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.sticker img {
+  width: var(--size, 90px);
+  display: block;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25));
+}
+@keyframes stickerFloat {
+  0%, 100% { transform: rotate(var(--rot)) translateY(0px); }
+  50%       { transform: rotate(var(--rot)) translateY(-10px); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── HERO: Artistas | Logo+Typo | App ── -->
+<section class="brandkit-hero">
+
+  <!-- Col 1: Artistas -->
+  <div class="box artistas-box" id="artistas">
+    <div class="artista-slide active" data-nombre="Elzar">
+      <img src="Artistas confirmados/Elzar.jpg" alt="Elzar">
+    </div>
+    <div class="artista-slide" data-nombre="Niña Lobo">
+      <img src="Artistas confirmados/niñalobo.jpg" alt="Niña Lobo">
+    </div>
+    <div class="artista-slide" data-nombre="La Vela Puerca">
+      <img src="Artistas confirmados/Lavelapuerca.jpg" alt="La Vela Puerca">
+    </div>
+    <div class="artistas-dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <span class="artistas-counter">1 / 3</span>
+  </div>
+
+  <!-- Col 2: Logo + Tipografías -->
+  <div class="hero-left">
+
+    <div class="box logo-box">
+      <img src="LOGO__HORIZONTAL2.webp" alt="Logo Cafuné">
+    </div>
+
+    <div class="box typo-box anton-box">
+      <span class="typo-name anton-name">VENÍ A VIVIRLO</span>
+      <span class="typo-detail">Usar en mayúsculas para títulos, deformando de manera vertical la tipografía.</span>
+    </div>
+
+    <div class="box typo-box outfit-box">
+      <div class="outfit-demo">
+        <p class="od-line"><span class="od-light">9 y 10</span> <span class="od-bold">ENERO</span></p>
+        <p class="od-line"><span class="od-medium">Pases en</span> <span class="od-bold">REDTICKETS</span></p>
+      </div>
+      <span class="typo-detail outfit-detail">Usar las 3 variantes de peso (Light, Medium, Bold) para construir jerarquía y contraste en el sistema tipográfico.</span>
+    </div>
+
+  </div>
+
+  <!-- Col 3: Aplicacion2.png -->
+  <div class="app-box">
+    <img src="Aplicacion2.jpeg" alt="App Cafuné">
+  </div>
+
+</section>
+
+<!-- ── ROW 2: Foto | Colores | Foto ── -->
+<div class="row row-colors">
+
+  <div class="box photo-box">
+    <img src="grilla.png" alt="">
+  </div>
+
+  <div class="box" id="colores">
+    <div class="color-grid">
+      <div class="cg-card cg-verde">
+        <span class="cg-name">Verde Cafuné</span>
+        <span class="cg-hex">#116336</span>
+      </div>
+      <div class="cg-card cg-magenta">
+        <span class="cg-name">Magenta Cafuné</span>
+        <span class="cg-hex">#F94ECD</span>
+      </div>
+      <div class="cg-card cg-blanco">
+        <span class="cg-name">Blanco</span>
+        <span class="cg-hex">#F9F9F9</span>
+      </div>
+      <div class="cg-card cg-amarillo">
+        <span class="cg-name">Amarillo Cafuné</span>
+        <span class="cg-hex">#FCFC00</span>
+      </div>
+      <div class="cg-card cg-negro">
+        <span class="cg-name">Negro Cafuné</span>
+        <span class="cg-hex">#262626</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Asset carousel -->
+  <div class="asset-box">
+    <div class="asset-slide active"><img src="Assets/1.png" alt=""></div>
+    <div class="asset-slide"><img src="Assets/2.png" alt=""></div>
+    <div class="asset-slide"><img src="Assets/3.png" alt=""></div>
+    <div class="asset-slide"><img src="Assets/4.png" alt=""></div>
+  </div>
+
+</div>
+
+<!-- ── ROW 3: Remeras unificadas | Pulseras ── -->
+<div class="row row-merch">
+  <div class="box merch-unified">
+    <img src="remera unnno.png" alt="Remera 1">
+    <img src="reme 2.png" alt="Remera 2">
+  </div>
+  <div class="box pulsera-box"><img src="Pulsera.webp" alt="Pulsera"></div>
+</div>
+
+<!-- ── ROW 4: Tipología de imagen ── -->
+<div class="box" id="tipologia-img">
+  <span class="tipologia-label">Tipología de imagen</span>
+  <div class="img-track">
+    <div class="img-panel"><img src="Fotos festival/Foto_-01.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-02.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-03.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-04.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-05.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-06.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-07.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-08.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-09.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-01.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-02.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-03.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-04.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-05.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-06.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-07.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-08.webp" alt=""></div>
+    <div class="img-panel"><img src="Fotos festival/Foto_-09.webp" alt=""></div>
+  </div>
+</div>
+
+
+<script>
+  // Asset carousel automático
+  (function() {
+    const slides = document.querySelectorAll('.asset-slide');
+    let cur = 0;
+    setInterval(() => {
+      slides[cur].classList.remove('active');
+      cur = (cur + 1) % slides.length;
+      slides[cur].classList.add('active');
+    }, 2000);
+  })();
+
+  // Artistas — click avanza + dots
+  (function() {
+    const box     = document.getElementById('artistas');
+    const slides  = box.querySelectorAll('.artista-slide');
+    const dots    = box.querySelectorAll('.dot');
+    const counter = box.querySelector('.artistas-counter');
+    let cur = 0;
+
+    box.addEventListener('click', () => {
+      slides[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+
+      cur = (cur + 1) % slides.length;
+
+      slides[cur].classList.add('active');
+      dots[cur].classList.add('active');
+      counter.textContent = (cur + 1) + ' / ' + slides.length;
+    });
+  })();
+</script>
+
+</body>
+</html>
